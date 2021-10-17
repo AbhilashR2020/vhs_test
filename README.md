@@ -1,16 +1,26 @@
 # VHS Test Template
 
-Use this template to complete your assignment for the backend elixir engineer position at VHS
+By Using the above template, i have built the application and tried executing the application.
 
-In this project you'll find two behaviors to implement a Slack and Blocknative client. They're given as starting points where you can just build the rest of the logic around that.
+1. POST `/blocknative/transaction/:transaction_id` 
+   - This end point is used to submit a pending transaction to the vhs application. Once confirmation of transaction, a Slack message wil pop-up.
+   
+2. POST `/blocknative/transactions` --> With Json `%{"transactions_id" => []}` 
+  - This endpoint is similar to the above, But it accepts multiple transaction
+ 
+ 3. POST `/blocknative/confirm` --> This endpoint is used for webhook notifications from blocknative to vhs
 
-## Configuration
 
-On the `config.exs` file you'll find the base configuration you need to implement both the Slack and Blocknative communication. You just need to request an API key from Blocknative and the webhook for Slack. The base URL is already set for both.
+ The Solution to the problem.
+ - On submitting the transactions through the above endpoint, vhs_test would trigger a HTTP call to blocknative to watch the transaction.
+ - And Vhs store this transaction information in ETS internal storage
+ - A WebHook is enabled on blocknative to trigger real-time notifications. I have used ngrok as tunneling library, which allow to server webhooks on localhost
+- On Confirmation through webhook, the statue message is pushed to Slack
+- If there is no confirmation in next 2 minutes, the vhs_test would notify on Slack channel, the status of transaction.
 
-Both clients already are wired. You do need to build everything around that to monitor or to input transactions into the clients.
+- I am not sure, of unwatch a transaction(there is no reference of diocumentation for unwatch). Due to this, we can't unwatch the transaction post confirmation. This leads to a huge transactions count. 
 
-You can run a `ngrok http 4000` to make the webhook on Blocknative work. Note that locally the path will be `localhost:4000/blocknative/confirm`.
 
-In the same config file the `:username` key needs to be set for the app to launch.
+The same solution, was trying to doing with webSocket. But I have a set of doubts, due to which, Its unfinised. 
+
 
