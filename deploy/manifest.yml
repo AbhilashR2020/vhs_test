@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: vhs-app
+  labels:
+    app: vhs-app
+spec:
+  type: LoadBalancer
+  selector:
+    app: vhs-app
+  ports:
+    - protocol: TCP
+      port: 80
+      name: vhs-app
+      targetPort: 3000
+---
+apiVersion: apps/v1
+kind: Deploymemt
+metadata:
+  namespace: default
+  name: vhs-app
+  labels:
+    app: vhs-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vhs-app
+  serviceName: vhs-app
+  template:
+    metadata:
+      labels:
+        app: vhs-app
+    spec:
+      containers:
+        - name: vhs-app
+          image: vhs:local
+          imagePullPolicy: Always
+          command: ["iex", "-S", "mix"]
+          resources:
+            requests:
+              memory: 1Gi
+              cpu: 500m
+            limits:
+              memory: 2Gi
+              cpu: 1000m
+          ports:
+            - containerPort: 3000
+              name: vhs-app
