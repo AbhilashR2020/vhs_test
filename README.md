@@ -5,10 +5,12 @@ By Using the above template, i have built the application and tried executing th
 1. POST `/blocknative/transaction/:transaction_id` 
    - This end point is used to submit a pending transaction to the vhs application. Once confirmation of transaction, a Slack message wil pop-up.
    
-2. POST `/blocknative/transactions' --> With Json %{"transactions_id" => []} 
+2. POST `/blocknative/transactions` --> With Json `%{"transactions_id" => []}` 
   - This endpoint is similar to the above, But it accepts multiple transaction
  
- 
+ 3. POST `/blocknative/confirm` --> This endpoint is used for webhook notifications from blocknative to vhs
+
+
  The Solution to the problem.
  - On submitting the transactions through the above endpoint, vhs_test would trigger a HTTP call to blocknative to watch the transaction.
  - And Vhs store this transaction information in ETS internal storage
