@@ -19,3 +19,8 @@ By Using the above template, i have built the application and tried executing th
 - If there is no confirmation in next 2 minutes, the vhs_test would notify on Slack channel, the status of transaction.
 
 - I am not sure, of unwatch a transaction(there is no reference of diocumentation for unwatch). Due to this, we can't unwatch the transaction post confirmation. This leads to a huge transactions count. 
+
+
+The same solution, was trying to doing with webSocket. But I have a set of doubts, due to which, Its unfinised. 
+
+
