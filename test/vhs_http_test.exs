@@ -29,7 +29,6 @@ defmodule VhsHttpTest do
 
   test "http post /blocknative/transactions", %{client_conn_id: conn_id} do
     :ets.delete_all_objects(Vhs.DataStore.TransactionStore)
-    :ets.delete_all_objects(:transactions)
     url = "/blocknative/transactions"
     body = %{ "transaction_ids" => ["0xa742edfa41970a72dfed56995cff9a3e8a0e497af2716b4d1c5b65e149a38657",
 	   			    "0x57218b8dbc62ff228b3c7a4929427fc315e07bd99acbc60c8f15892107aaa2c2"]}
